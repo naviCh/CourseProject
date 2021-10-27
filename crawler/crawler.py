@@ -37,7 +37,7 @@ class Crawler:
         List of submissions
         """
         headlines = [] 
-        start_epoch = int(date.timestamp())
+        start_epoch = int(start.timestamp())
         submissions = list(self.api.search_submissions(after=start_epoch,
                                                        subreddit=sub,
                                                        limit=upperlimit))
