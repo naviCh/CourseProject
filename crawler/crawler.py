@@ -1,6 +1,7 @@
 import praw 
+from psaw import PushshiftAPI
 from pathlib import Path
-
+import datetime as dt
 
 class Crawler: 
     def __init__(self, secrets_file=Path("./secrets")): 
@@ -17,27 +18,29 @@ class Crawler:
                                   client_secret=self.secrets['client_secret'],
                                   user_agent=self.secrets['user_agent']
                                 )
-        
+        self.api = PushshiftAPI(self.reddit)
     
-    def crawl(self, sub, start, end):
+    def crawl(self, sub, start, upperlimit):
         """
         Crawls subreddit and finds headlines between two dates 
 
         Parameters
         ----------
-        sub: str 
-            Subreddit
-        start: str 
+        sub: string
+            Subreddit to crawl
+        start: datetime
             Start date 
-        End: str 
-            End date
-
+        upperlimit: int
+            Limit of submissions
         Returns
         -------
         List of headlines and links
         """
-        headlines = set() 
-        subreddit = self.reddit.subreddit(sub)
-        for submission in subreddit.new(limit=None): 
-            headlines.add(submission.title)
-        print(len(headlines))
+        headlines = [] 
+        start_epoch = int(date.timestamp())
+        submissions = list(self.api.search_submissions(after=start_epoch,
+                                                       subreddit=sub,
+                                                       limit=upperlimit))
+
+        # submission follows https://praw.readthedocs.io/en/stable/code_overview/models/submission.html
+        return submissions
