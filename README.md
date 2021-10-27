@@ -11,7 +11,7 @@ pip install -r requirements.txt
 ## Setup 
 ### Secrets
 Go to https://www.reddit.com/prefs/apps/ to get a `client_id`,`client_secret`, and `user_agent`.
-The file `secrets` should contain key-value pairs of the format `key=value` and should be placed in the `crawler` folder. The secrets needed are:
+The file `secrets` should contain key-value pairs of the format `key=value` and should be placed in the project root directory. The secrets needed are:
 
 * `client_id` - Client ID for personal script use 
 * `client_secret` - Secret
