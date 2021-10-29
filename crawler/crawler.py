@@ -51,6 +51,18 @@ class Crawler:
 
 
     def sort_format_submissions(self, submissions):
+        """
+        Sorts submissions from crawl based on number of upvotes
+
+        Paramters
+        ---------
+        submissions: submission 
+            list of praw submission objects
+        
+        Returns
+        -------
+        Returns a list of formatted submission dictionaries 
+        """
         reformated = [] 
         for submission in submissions: 
             entry = {} 
