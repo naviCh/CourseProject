@@ -60,5 +60,5 @@ class Crawler:
         List of Comments
         """
         submission.comment_sort = "top"
-        comments = list(submission)
+        comments = submission.comments.list()
         return comments[0:threshold] if threshold < len(comments) else comments
