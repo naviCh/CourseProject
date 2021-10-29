@@ -20,7 +20,7 @@ class Crawler:
                                 )
         self.api = PushshiftAPI(self.reddit)
     
-    def crawl(self, sub, start, upperlimit):
+    def crawl(self, sub, start, end, upperlimit):
         """
         Crawls subreddit and finds headlines between two dates 
 
@@ -30,6 +30,8 @@ class Crawler:
             Subreddit to crawl
         start: datetime
             Start date 
+        end: datetime 
+            End date 
         upperlimit: int
             Limit of submissions
         Returns
@@ -37,7 +39,9 @@ class Crawler:
         List of submissions
         """
         start_epoch = int(start.timestamp())
+        end_epoch = int(end.timestamp())
         submissions = list(self.api.search_submissions(after=start_epoch,
+                                                       before=end_epoch,
                                                        subreddit=sub,
                                                        limit=upperlimit))
 
