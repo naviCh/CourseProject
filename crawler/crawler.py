@@ -54,7 +54,7 @@ class Crawler:
         """
         Sorts submissions from crawl based on number of upvotes
 
-        Paramters
+        Parameters
         ---------
         submissions: submission 
             list of praw submission objects
