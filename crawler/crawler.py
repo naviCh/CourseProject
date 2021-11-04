@@ -20,7 +20,6 @@ class Crawler:
                                   user_agent=self.secrets['user_agent']
                                 )
         self.api = PushshiftAPI(self.reddit)
-    
    
     def crawl(self, sub, start, end, upperlimit):
         """
@@ -49,11 +48,51 @@ class Crawler:
         # submission follows https://praw.readthedocs.io/en/stable/code_overview/models/submission.html
         return submissions
 
+    def filter_submissions(self, submissions, threshold=2): 
+        """
+        Filters submissions based on number of upvotes 
+
+        Parameters
+        ----------
+        submissions: list
+            list of submission objects from praw
+        threshold: int 
+            number of upvotes necessary 
+
+        Returns
+        -------
+        List of Submissions 
+        """
+        filtered = [] 
+        for submission in submissions: 
+            if submission.score >= threshold: 
+                filtered.append(submission)
+        return filtered
+    
+    def get_comments(self, submission, threshold=10):
+        """
+        Gets Comments from a praw submission above a threshold
+
+        Parameters
+        ----------
+        submission: submission
+            praw submission object
+        threshold: int 
+            top n comments to return 
+
+        Returns
+        -------
+        List of Comments in Markdown
+        """
+        submission.comment_sort = "top"
+        submission.comments.replace_more(limit=None)
+        comments = submission.comments
+        return comments[0:threshold] if threshold < len(comments) else comments
 
     def sort_format_submissions(self, submissions):
         """
-        Sorts submissions from crawl based on number of upvotes
-
+        Sorts submissions objects based on number of upvotes
+    
         Parameters
         ---------
         submissions: submission 
@@ -77,26 +116,3 @@ class Crawler:
             reformated.append(entry)
         sorted_submissions = sorted(reformated, key=lambda x: x['upvotes'], reverse=True)
         return sorted_submissions
-        
-    
-    def get_comments(self, submission, threshold):
-        """
-        Gets Comments from a praw submission above a threshold
-
-        Parameters
-        ----------
-        submission: submission
-            praw submission object
-        threshold: int 
-            top n comments to return 
-
-        Returns
-        -------
-        List of Comments in Markdown
-        """
-        submission.comment_sort = "top"
-        submission.comments.replace_more(limit=None)
-        comments = submission.comments
-        return comments[0:threshold] if threshold < len(comments) else comments
-
-    
