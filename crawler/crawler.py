@@ -48,7 +48,7 @@ class Crawler:
         # submission follows https://praw.readthedocs.io/en/stable/code_overview/models/submission.html
         return submissions
 
-    def filter_submissions(self, submissions, threshold=2): 
+    def filter_submissions(self, submissions, lower=2, upper=5000): 
         """
         Filters submissions based on number of upvotes 
 
@@ -56,8 +56,10 @@ class Crawler:
         ----------
         submissions: list
             list of submission objects from praw
-        threshold: int 
-            number of upvotes necessary 
+        lower: int default 2
+            lower bound of upvotes 
+        upper: int default 5000
+            higher bound of upvotes
 
         Returns
         -------
@@ -65,7 +67,7 @@ class Crawler:
         """
         filtered = [] 
         for submission in submissions: 
-            if submission.score >= threshold: 
+            if submission.score >= lower and submission.score <= upper: 
                 filtered.append(submission)
         return filtered
     
@@ -92,7 +94,8 @@ class Crawler:
     def sort_format_submissions(self, submissions):
         """
         Sorts submissions objects based on number of upvotes
-    
+        Mostly for testing purposes 
+
         Parameters
         ---------
         submissions: submission 
