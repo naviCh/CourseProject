@@ -95,7 +95,7 @@ class Crawler:
         List of Comments in Markdown
         """
         submission.comment_sort = "top"
-        submission.comments.replace_more(limit=None)
+        submission.comments.replace_more(limit=0)
         comments = submission.comments
         return comments[0:threshold] if threshold < len(comments) else comments
 
