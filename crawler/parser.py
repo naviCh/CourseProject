@@ -45,10 +45,11 @@ if __name__ == "__main__":
     end = dt.datetime(2018, 1, 1)
 
     crawler = Crawler()
-    submissions = crawler.crawl("worldnews", start, end, 10000) #grabbing 100 submissions from 2017/1/1 to 2018/1/1
-    filtered_submissions = crawler.filter_submissions(submissions, lower=100, upper=10000)  # filter based on upvotes 5-1000
-    print("upvotes: " + str(filtered_submissions.length))
-    #parse_reddit(submissions)
+    submissions = crawler.crawl("worldnews", start, end, 5000) #grabbing 100 submissions from 2017/1/1 to 2018/1/1
+    print("Done grabbing submissions")
+    filtered_submissions = crawler.filter_submissions(submissions, lower=10)  # filter based on upvotes 5-1000
+    print("upvotes: " + str(len(filtered_submissions)))
+    parse_reddit(filtered_submissions)
 
 
 
