@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
@@ -23,26 +24,41 @@ def sentiment_headline_with_comments(submissions):
 		comments = str(row.COMMENTS)
 
 		# Setting weights for headline sentiment and comments sentiment
-		comments_weight = 0.1 if comments else 0.0
+		comments_weight = 0.2 if comments else 0.0
 		headline_weight = 1.0 - comments_weight
 
 		pol_score_headline_dict = sia.polarity_scores(headline)
 		pol_score_comments_dict = sia.polarity_scores(comments)
+		compound_score = pol_score_headline_dict['compound']*headline_weight + pol_score_comments_dict['compound']*comments_weight
+
+		if compound_score < -0.2:
+			baseline_sentiment = -1
+		elif -0.2 <= compound_score <= 0.2:
+			baseline_sentiment = 0
+		else:
+			baseline_sentiment = 1
+
 		pol_score_dict = {
-			'neg': pol_score_headline_dict['neg']*headline_weight + pol_score_comments_dict['neg']*comments_weight,
-			'neu': pol_score_headline_dict['neu']*headline_weight + pol_score_comments_dict['neu']*comments_weight,
-			'pos': pol_score_headline_dict['pos']*headline_weight + pol_score_comments_dict['pos']*comments_weight,
-			'compound': pol_score_headline_dict['compound']*headline_weight + pol_score_comments_dict['compound']*comments_weight,
-			'headline': headline,
-			'comments': comments,
+			'BASELINE_SENTIMENT': baseline_sentiment,
+			'SENTIMENT_IVAN': row.SENTIMENT_IVAN,
+			'SENTIMENT_JEFF': row.SENTIMENT_JEFF,
+			'SENTIMENT_AUSTIN': row.SENTIMENT_AUSTIN,
+			'TITLE': headline,
+			'URL': row.URL,
+			'DATE': row.DATE,
+			'UPVOTE': row.UPVOTE,
+			'DOWNVOTE': row.DOWNVOTE,
+			'COMMENTS': comments,
 		}
+
 		results.append(pol_score_dict)
 
 	return pd.DataFrame.from_records(results)
 
 if __name__ == "__main__":
-	submissions = pd.read_excel("crawler/redditCrawlerData.xls")
+	submissions = pd.read_csv(os.path.dirname(os.getcwd()) + "/crawler/redditCrawlerData.csv")
+	submissions.columns = submissions.columns.str.replace(' ', '_')
 
 	# TODO: choose sentiment method based on command line argument
 	sentiments = sentiment_headline_with_comments(submissions)
-	sentiments.to_csv('baseline_sentiment_results_headline_comments.csv', index=False)
+	sentiments.to_csv(os.path.dirname(os.getcwd()) + '/crawler/redditCrawlerData.csv', index=False)
