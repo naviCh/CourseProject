@@ -1,4 +1,6 @@
 datetime
+nltk
+pandas
 praw
 psaw
 pathlib
