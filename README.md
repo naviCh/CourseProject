@@ -40,8 +40,7 @@ Having called `crawler.crawl()` the user can take these submission objects and p
 ## Running the parser
 In order to run the parser, run:
 ```bash
-cd crawler
-python parser.py
+python crawler/parser.py
 ```
 
 The parser connects to the crawler class. The crawler class will first use the Reddit API psaw, as well as parameters such as SubReddit name, start date, end date, and number of submissions, to fetch the data into an object. Afterwards, to filter out low quality submissions, we use upvote count to filter out submissions below 10 upvotes. Finally, the parser would create an Excel file and write into multiple columns. We take the title, URL, Date of submissions, upvote/downvote count, as well as top 10 popular comments into our excel file for the sentiment analysis. We also include several empty columns for manual annotations as well as an empty column for the sentiment analysis results.
