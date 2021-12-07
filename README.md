@@ -17,6 +17,26 @@ The file `secrets` should contain key-value pairs of the format `key=value` and 
 * `client_secret` - Secret
 * `user_agent` - Reddit Username
 
+## Running the crawler 
+Inside the `crawler` folder, `crawler.py` is a class object that represents the crawler for the Reddit API. In order to instantiate a crawler, the user must have completed the `setup` steps above. Examples of how to run `crawler` can be found in `parser` and below: 
+
+```bash
+from crawler import Crawler 
+import datetime as dt
+
+#grabbing 100 submissions from 2017/1/1 to 2018/1/1
+start = dt.datetime(2020, 1, 1)
+end = dt.datetime(2021, 7, 7)
+
+crawler = Crawler() 
+submissions = crawler.crawl("worldnews", start, end, 100) 
+filtered_submissions = crawler.filter_submissions(submissions, lower=5, upper=1000)
+for sub in filtered_submissions: 
+    print(sub.score)
+```
+Having called `crawler.crawl()` the user can take these submission objects and perform the relevant functions necessary to `filter_submissions()` based on upvotes, `get_comments()` based on upvotes, and `sort_format_submissions()`. Please reference `crawler.py` for additional parameter information. 
+
+
 ## Running the parser
 In order to run the parser, run:
 ```bash
@@ -24,7 +44,7 @@ cd crawler
 python parser.py
 ```
 
-The parser connects to the crawler class. The crawler class will first use the Reddit API psaw, as well as parameters such as SubReddit name, start date, end date, and number of submissions, to fetch the data into an object. Afterwards, to filter out low quality submissions, we use upvote count to filter out submissions below 10 upvotes. FInally, the parser would create an Excel file and write into multiple columns. We take the title, URL, Date of submissions, upvote/downvote count, as well as top 10 popular comments into our excel file for the sentiment analysis. We also include several empty columns for manual annotations as well as an empty column for the sentiment analysis results.
+The parser connects to the crawler class. The crawler class will first use the Reddit API psaw, as well as parameters such as SubReddit name, start date, end date, and number of submissions, to fetch the data into an object. Afterwards, to filter out low quality submissions, we use upvote count to filter out submissions below 10 upvotes. Finally, the parser would create an Excel file and write into multiple columns. We take the title, URL, Date of submissions, upvote/downvote count, as well as top 10 popular comments into our excel file for the sentiment analysis. We also include several empty columns for manual annotations as well as an empty column for the sentiment analysis results.
 
 The columns for manual annotation were then populated by the team.
 
