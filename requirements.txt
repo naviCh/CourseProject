@@ -4,3 +4,4 @@ pandas
 praw
 psaw
 pathlib
+xlwt
