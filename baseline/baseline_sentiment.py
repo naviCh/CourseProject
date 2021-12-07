@@ -31,29 +31,32 @@ def sentiment_headline_with_comments(submissions):
 		pol_score_comments_dict = sia.polarity_scores(comments)
 		compound_score = pol_score_headline_dict['compound']*headline_weight + pol_score_comments_dict['compound']*comments_weight
 
-		if compound_score < -0.2:
-			baseline_sentiment = -1
-		elif -0.2 <= compound_score <= 0.2:
-			baseline_sentiment = 0
-		else:
-			baseline_sentiment = 1
-
-		pol_score_dict = {
-			'BASELINE_SENTIMENT': baseline_sentiment,
-			'SENTIMENT_IVAN': row.SENTIMENT_IVAN,
-			'SENTIMENT_JEFF': row.SENTIMENT_JEFF,
-			'SENTIMENT_AUSTIN': row.SENTIMENT_AUSTIN,
-			'TITLE': headline,
-			'URL': row.URL,
-			'DATE': row.DATE,
-			'UPVOTE': row.UPVOTE,
-			'DOWNVOTE': row.DOWNVOTE,
-			'COMMENTS': comments,
-		}
-
-		results.append(pol_score_dict)
-
+		results.append(input_into_csv(row, headline, comments, compound_score, -0.2, 0.2))
 	return pd.DataFrame.from_records(results)
+
+def input_into_csv(row, headline, comments, compound_score, negative_baseline, positive_baseline):
+
+	if compound_score < negative_baseline:
+		baseline_sentiment = -1
+	elif negative_baseline <= compound_score <= positive_baseline:
+		baseline_sentiment = 0
+	else:
+		baseline_sentiment = 1
+
+	pol_score_dict = {
+		'BASELINE_SENTIMENT': baseline_sentiment,
+		'SENTIMENT_IVAN': row.SENTIMENT_IVAN,
+		'SENTIMENT_JEFF': row.SENTIMENT_JEFF,
+		'SENTIMENT_AUSTIN': row.SENTIMENT_AUSTIN,
+		'TITLE': headline,
+		'URL': row.URL,
+		'DATE': row.DATE,
+		'UPVOTE': row.UPVOTE,
+		'DOWNVOTE': row.DOWNVOTE,
+		'COMMENTS': comments,
+	}
+
+	return pol_score_dict
 
 if __name__ == "__main__":
 	submissions = pd.read_csv(os.path.dirname(os.getcwd()) + "/crawler/redditCrawlerData.csv")
