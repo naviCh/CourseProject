@@ -8,6 +8,12 @@ From project root directory, run:
 pip install -r requirements.txt
 ```
 
+Running the baseline model also requires a one-time installation of the vader_lexicon.  After installing nltk via requirements.txt, open a terminal window in Python and run:
+```bash
+  >>> import nltk
+  >>> nltk.download('vader_lexicon')
+```
+
 ## Setup 
 ### Secrets
 Go to https://www.reddit.com/prefs/apps/ to get a `client_id`,`client_secret`, and `user_agent`.
