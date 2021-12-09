@@ -3,9 +3,9 @@
 Please fork this repository and paste the github link of your fork on Microsoft CMT. Detailed instructions are on Coursera under Week 1: Course Project Overview/Week 9 Activities.
 
 ## Contributions
-Ivan Cheung - Parser, Textblob analysis and manual annotations
-Jeff Zhan - Reddit crawler and manual annotations
-Austin Zhang - Baseline NLTK sentiment analysis and manual annotations
+* `Ivan Cheung` - Parser, Textblob analysis and manual annotations
+* `Jeff Zhan` - Reddit crawler and manual annotations
+* `Austin Zhang` - Baseline NLTK sentiment analysis and manual annotations
 
 ## Installation
 From project root directory, run: 
