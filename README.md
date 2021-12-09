@@ -5,7 +5,7 @@ Please fork this repository and paste the github link of your fork on Microsoft 
 ## Contributions
 * `Ivan Cheung` - Parser, Textblob analysis and manual annotations
 * `Jeff Zhan` - Reddit crawler and manual annotations
-* `Austin Zhang` - Baseline NLTK sentiment analysis and manual annotations
+* `Austin Wang` - Baseline NLTK sentiment analysis and manual annotations
 
 ## Installation
 From project root directory, run: 
