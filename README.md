@@ -2,6 +2,9 @@
 
 Please fork this repository and paste the github link of your fork on Microsoft CMT. Detailed instructions are on Coursera under Week 1: Course Project Overview/Week 9 Activities.
 
+## Presentation link
+Please access the final project presentation at https://mediaspace.illinois.edu/media/t/1_40y3fxbn
+
 ## Contributions
 * `Ivan Cheung` - Parser, Textblob analysis and manual annotations
 * `Jeff Zhan` - Reddit crawler and manual annotations
